@@ -1,0 +1,35 @@
+<div ng-controller="RunTimerCtrl">
+    <div class="centerize timer-buttons" ng-show="timerTypesSvc.notRounds()">
+        <a class="topcoat-button--large--cta start-button"
+           ng-click="start()" ng-show="!started">
+            Start
+        </a>
+        <a class="topcoat-button--large pause-button"
+           ng-click="pause()" ng-show="started && !paused">
+            Pause
+        </a>
+        <a class="topcoat-button--large--cta resume-button"
+           ng-click="resume()" ng-show="paused">
+            Resume
+        </a>
+        <a class="topcoat-button--large--cta stop-button"
+           ng-click="stop()" ng-show="started">
+            Stop
+        </a>
+        <a class="topcoat-button--large snapshot-button"
+           ng-click="snapshot()" ng-show="started">
+            Snapshot
+        </a>
+    </div>
+    <div class="topcoat-list__container">
+        <ul class="topcoat-list">
+            <li class="topcoat-list__item">
+                <h1>{{time.valueOf() | date:'mm:ss'}}.{{time.milliseconds()/100}}</h1>
+            </li>
+            <li ng-repeat="snapshot in snapshots" class="topcoat-list__item">
+                {{snapshot.valueOf() | date:'mm:ss'}}.{{snapshot.milliseconds()/100}}
+            </li>
+        </ul>
+    </div>
+
+</div>

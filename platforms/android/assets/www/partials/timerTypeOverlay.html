@@ -1,0 +1,10 @@
+<div class="topcoat-overlay-bg" ng-show="showTimerTypeDoalog" ></div>
+<aside id='settingsOverlay2' ng-show="showTimerTypeDoalog" class="topcoat-overlay"  ng-controller="HomeCtrl">
+    <a class="topcoat-button timer-type-button"
+       ng-repeat="timerType in timerTypes"
+       ng-click="setTimerType(timerType)"
+       ng-class="{'is-active': timerType == $storage.timerType}">{{timerType}}</a>
+    <div class="topcoat-overlay-buttons">
+        <button role="button" class="topcoat-button--cta timer-type-button" ng-click="closeOverlay()">Cancel</button>
+    </div>
+</aside>

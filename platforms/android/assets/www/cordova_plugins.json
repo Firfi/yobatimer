@@ -1,0 +1,1 @@
+[{"file":"plugins/org.apache.cordova.core.AudioHandler/www/MediaError.js","id":"org.apache.cordova.core.AudioHandler.MediaError","clobbers":["window.MediaError"]},{"file":"plugins/org.apache.cordova.core.AudioHandler/www/Media.js","id":"org.apache.cordova.core.AudioHandler.Media","clobbers":["window.Media"]}]

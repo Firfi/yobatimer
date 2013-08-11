@@ -1,0 +1,43 @@
+<div class="topcoat-navigation-bar">
+    <div class="topcoat-navigation-bar__item center three-quarters">
+        <h1 class="topcoat-navigation-bar__title">Yoba simple timer</h1>
+    </div>
+</div>
+<div class="topcoat-list__container list" ng-controller="RunRoundsCtrl">
+    <ul class="topcoat-list">
+        <li class="topcoat-list__item rounds">
+            <span>Round:</span>
+            <span class="round right"><span class="current-round">{{round}}</span>/{{$storage.rounds}}</span>
+        </li>
+        <li class="topcoat-list__item" ng-class="{current: work, relaxed: work && complex && relaxed, active: work && complex && !relaxed}">
+            <span class="round-time-left">Round time left:
+            </span>
+            <span class="round-time-left-number right">
+                {{roundTimeLeft.unix()*1000 | date:'mm:ss'}}
+            </span>
+        </li>
+        <li class="topcoat-list__item" ng-class="{current: rest}">
+            <span class="rest-time-left">Rest time left:
+            </span>
+            <span class="rest-time-left-number right">
+                {{restTimeLeft.unix()*1000 | date:'mm:ss'}}
+            </span>
+        </li>
+    </ul>
+    <div class="centerize">
+        <a class="topcoat-button--large pause-button"
+           ng-click="pause()" ng-show="started && !paused">
+            Pause
+        </a>
+        <a class="topcoat-button--large--cta resume-button"
+           ng-click="resume()" ng-show="paused">
+            Resume
+        </a>
+        <a class="topcoat-button--large--cta stop-button"
+           ng-click="back()" ng-show="started">
+            Stop
+        </a>
+    </div>
+</div>
+<ng-include src="'partials/timerTypeOverlay.html'"></ng-include>
+<ng-include src="'partials/settingsOverlay.html'"></ng-include>

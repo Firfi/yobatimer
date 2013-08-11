@@ -1,0 +1,50 @@
+<div class="topcoat-navigation-bar">
+    <div class="topcoat-navigation-bar__item center three-quarters">
+        <h1 class="topcoat-navigation-bar__title">Yoba simple timer</h1>
+    </div>
+    <div class="topcoat-navigation-bar__item right quarter">
+        <a class="topcoat-icon-button--quiet" ng-click="changeSettings()">
+            <span class="topcoat-icon settings-icon"></span>
+        </a>
+    </div>
+</div>
+
+<div class="topcoat-list__container list">
+    <ul class="topcoat-list settings-list">
+        <li class="topcoat-list__item">
+            <a class="topcoat-button--quiet" ng-click="selectTimerTypeDialog()" ng-show="!started">Mode: {{$storage.timerType}}</a>
+        </li>
+        <li class="topcoat-list__item" ng-show="!timerTypesSvc.notRounds()">
+            <a time-scroll class="topcoat-button--quiet" times="'rounds', 'roundMinutes', 'roundSeconds'" mins="'1'" time-wheels="HHiiss">
+                {{$storage.rounds}} rounds, {{$storage.roundMinutes}} min<span ng-show="$storage.roundSeconds !== '0'">/{{$storage.roundSeconds}} sec</span> per round
+            </a>
+        </li>
+        <li class="topcoat-list__item" ng-show="!timerTypesSvc.notRounds()">
+            <a time-scroll class="topcoat-button--quiet" times="'restMinutes', 'restSeconds'" time-wheels="iiss">
+                Rest between rounds: {{$storage.restMinutes}} min<span ng-show="$storage.restSeconds !== '0'">/{{$storage.restSeconds}} sec</span>
+            </a>
+        </li>
+        <li class="topcoat-list__item" ng-show="timerTypesSvc.isComplex()">
+            <a time-scroll class="topcoat-button--quiet" times="'intensiveSeconds', 'relaxedSeconds'" time-wheels="ssss" sec-text="Intensive" sec-text2="Relaxed" mins="'5', '5'">
+                {{$storage.intensiveSeconds}} sec intensive/{{$storage.relaxedSeconds}} sec relaxed</span>
+            </a>
+        </li>
+        <li class="topcoat-list__item" ng-show="timerTypesSvc.isCountdown() && !started">
+            <a time-scroll class="topcoat-button--quiet" times="'timerMinutes', 'timerSeconds'" time-wheels="iiss">
+                {{timerType}}: {{$storage.timerMinutes}} min<span ng-show="$storage.timerSeconds !== '0'">/{{$storage.timerSeconds}} sec</span>
+            </a>
+        </li>
+    </ul>
+    <div class="centerize" ng-show="!timerTypesSvc.notRounds() && !settingsInvalid()">
+        <a class="topcoat-button--large--cta start-button"
+           ng-click="start()">
+            Start
+        </a>
+    </div>
+    <div class="centerize start-button" ng-show="settingsInvalid()" style="color: red;">
+        <span>{{settingsErrorMessage}}</span>
+    </div>
+    <ng-include src="'partials/runTimerView.html'" ng-show="timerTypesSvc.notRounds()"></ng-include>
+</div>
+<ng-include src="'partials/timerTypeOverlay.html'"></ng-include>
+<ng-include src="'partials/settingsOverlay.html'"></ng-include>
