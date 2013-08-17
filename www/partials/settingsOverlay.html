@@ -1,7 +1,8 @@
 <div class="topcoat-overlay-bg" ng-show="showSettings" ></div>
 <aside id='settingsOverlay2' ng-show="showSettings" class="topcoat-overlay"  ng-controller="SettingsCtrl">
-    <h1>Version {{' %VERSION%' | interpolate}}</h1>
+    <h1>Close application?</h1>
     <div class="topcoat-overlay-buttons">
-        <button role="button" class="topcoat-button--cta" ng-click="closeOverlay()">Ok</button>
+        <button role="button" class="topcoat-button--cta" ng-click="closeApplication()">Yes</button>
+        <button role="button" class="topcoat-button" ng-click="closeOverlay()">No</button>
     </div>
 </aside>

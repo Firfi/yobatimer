@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.firfi.yobaimer"
+<widget id="com.firfi.yobatimer"
         version="0.0.1"
         xmlns="http://www.w3.org/ns/widgets"
         xmlns:cdv="http://cordova.apache.org/ns/1.0"
@@ -16,6 +16,7 @@
     <preference name="webviewbounce" value="true" />
     <plugins>
         <plugin name="Media" value="org.apache.cordova.AudioHandler" />
+        <plugin name="PGLowLatencyAudio" value="com.phonegap.PGLowLatencyAudio" />
     </plugins>
     <feature name="http://api.phonegap.com/1.0/file"/>
     <feature name="http://api.phonegap.com/1.0/media"/>

@@ -17,7 +17,7 @@
        under the License.
  */
 
-package com.firfi.yobaimer;
+package com.firfi.yobatimer;
 
 import android.os.Bundle;
 import org.apache.cordova.*;
@@ -27,7 +27,6 @@ public class YobaTimer extends DroidGap
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
-        super.setIntegerProperty("splashscreen", R.drawable.splash);
         super.onCreate(savedInstanceState);
         // Set by <content src="index.html" /> in config.xml
         super.loadUrl(Config.getStartUrl());

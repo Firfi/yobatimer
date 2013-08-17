@@ -29,27 +29,47 @@ myApp.factory('phonegapReady', function ($rootScope, $q) {
     };
 });
 
-myApp.factory('audioSvc', function(agent,$timeout) {
-    function getPhoneGapPath(p) {
+myApp.factory('audioSvc', function(agent,$timeout,phonegapReady) {
+    var localPlay = null;
+    var promise = phonegapReady().then(function () {
+//        function getPhoneGapPath(p) {
+//            var path = window.location.pathname;
+//            path = path.substr(path, path.length - 10);
+//            return "file://" + path + p;
+//        }
+        localPlay = function(id) {
+            var play;
+            if (agent.isBrowser()) {
+              play = function() {console.info('playing sound: ' + id + ' at ' + moment().format('mm:ss.SSS'))};
+            } else {
+              play = function() { PGLowLatencyAudio.play(id) }
+            }
+            return {play: play};
+        };
+        try {
+          PGLowLatencyAudio.preloadFX('beep', 'beep.wav');
+          PGLowLatencyAudio.preloadFX('bell1', 'bell1.wav');
+          PGLowLatencyAudio.preloadFX('bell3', 'bell3.wav');
+        } catch(e) {
+          if (!agent.isBrowser()) {
+            alert(e);
+          }
+        }
 
-        var path = window.location.pathname;
-        path = path.substr(path, path.length - 10);
-        return 'file://' + path + p;
+    });
 
-    }
-    function localMedia(path) {
-        return agent.isBrowser() ? {play: function() {console.info('playing sound: ' + path + ' at ' + moment().format('mm:ss.SSS'))}} : new Media(getPhoneGapPath(path));
-    }
-    var tick = localMedia('beep.wav');
-    var gong = localMedia('gong.mp3');
     return {
-        playTick: (function() {
-            $timeout(tick.play);
-        }),
-        playGong: (function() {
-            $timeout(gong.play);
-        })
+        playTick: function() {promise.then(function() {
+          localPlay('beep').play();
+        })},
+        playBell1: function() {promise.then(function() {
+          localPlay('bell1').play();
+        })},
+        playBell3: function() {promise.then(function() {
+          localPlay('bell3').play();
+        })}
     }
+
 });
 
 myApp.factory('navSvc', function($navigate) {

@@ -30,6 +30,8 @@
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/bin/res/drawable-xhdpi/splash.png \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/beep.wav \
+/Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/bell1.wav \
+/Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/bell3.wav \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/bkp \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/config.xml \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/cordova.js \
@@ -37,12 +39,13 @@
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/cordova_plugins.json \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/css \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/font \
-/Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/gong.mp3 \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/img \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/index.html \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/js \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/lib \
+/Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/mp.mp3 \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/partials \
+/Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/PGLowLatencyAudio.js \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/plugins \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/res \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/spec \
@@ -77,7 +80,7 @@
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/font/SourceSansPro-Regular.otf \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/font/SourceSansPro-Semibold.otf \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/font/SourceSansPro-SemiboldIt.otf \
-/Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/img/avatar.png \
+/Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/img/back.svg \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/img/bg_dark.png \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/img/breadcrumb.png \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/img/checkbox_checked.png \
@@ -104,6 +107,7 @@
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/img/logo.png \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/img/pop-up-triangle-dark.png \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/img/pop-up-triangle.png \
+/Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/img/ring.jpg \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/img/search-bg.png \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/img/search-bg2x.png \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/img/search.svg \
@@ -130,6 +134,7 @@
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/lib/mobiscroll.custom-2.6.2.min.js \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/lib/moment.min.js \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/lib/ngStorage.js \
+/Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/lib/PGLowLatencyAudio.js \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/lib/zepto.min.js \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/partials/homeView.html \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/partials/runRoundsView.html \

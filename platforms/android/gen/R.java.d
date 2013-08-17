@@ -1,4 +1,4 @@
-/Users/firfi/work/phonegapp/yobatimer/platforms/android/gen/com/firfi/yobaimer/R.java \
+/Users/firfi/work/phonegapp/yobatimer/platforms/android/gen/com/firfi/yobatimer/R.java \
  : /Users/firfi/work/phonegapp/yobatimer/platforms/android/res/drawable/icon.png \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/res/drawable-hdpi/ic_launcher.png \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/res/drawable-hdpi/icon.png \

@@ -17,9 +17,27 @@
  * under the License.
  */
 * {
-    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0
+    -webkit-tap-highlight-color: rgba(0,0,0,0.5); /* make transparent link selection, adjust last value opacity 0 to 1.0
     */
 }
+
+.mb-page .topcoat-navigation-bar {
+    background-color: #1D7F7F;
+}
+
+.main .topcoat-list__container {
+    background-color: transparent;
+}
+
+.main .topcoat-button {
+    background-color: rgba(89,91,91,0.8)
+}
+
+div .list.main {
+    background-image: url("../img/ring.jpg");
+    background-size: auto 100%;
+}
+
 .list {
     width: 100%;
     height: 100%;
@@ -84,6 +102,13 @@
 
 .settings-icon {
     background: url("../img/settings_light.svg") no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+}
+
+.back-icon {
+    background: url("../img/back.svg") no-repeat;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -306,6 +331,7 @@ h4 {
 
 .settings-list li {
     padding: 0;
+    text-align: center;
 }
 
 .start-button, .stop-button, .pause-button, .snapshot-button, .resume-button {
@@ -323,6 +349,15 @@ h4 {
 
 .timer-buttons .stop-button {
     margin-left: 5px;
+}
+
+.timer .topcoat-list {
+    background-color: rgba(89,91,91,0.8);
+    margin-top: 15px;
+}
+
+.main .settings-list {
+    margin-top: 15px;
 }
 
 .timer-type-button {

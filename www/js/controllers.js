@@ -1,7 +1,11 @@
 'use strict';
 
 /* Controllers */
-function HomeCtrl($scope,navSvc,$rootScope,$localStorage,timerTypesSvc,storageSvc,overlaySvc,timeSvc) {
+// phonegapReady should be included in main controller in order to initialization before phonegapready event fired
+function HomeCtrl(phonegapReady,$scope,navSvc,$rootScope,$localStorage,timerTypesSvc,storageSvc,overlaySvc,timeSvc,audioSvc) {
+    $scope.test = function() {
+        audioSvc.playTick();
+    };
     var slidePage = function (path,type) {
         navSvc.slidePage(path,type);
     };
@@ -99,6 +103,9 @@ function RunRoundsCtrl($scope,navSvc,$localStorage,$timeout,audioSvc,timeSvc,$q,
                     $scope.roundTimeSpent = moment(0);
                     d.resolve();
                 } else {
+                    if ($scope.roundTimeLeft.unix() < 4) {
+                      audioSvc.playTick();
+                    }
                     timeout = $timeout(cdr, 1000);
                 }
             }), 1000);
@@ -113,6 +120,9 @@ function RunRoundsCtrl($scope,navSvc,$localStorage,$timeout,audioSvc,timeSvc,$q,
                     resetRestTimeLeft();
                     d.resolve();
                 } else {
+                    if ($scope.restTimeLeft.unix() < 3) {
+                      audioSvc.playTick();
+                    }
                     timeout = $timeout(cdr, 1000);
                 }
             }), 1000);
@@ -122,9 +132,12 @@ function RunRoundsCtrl($scope,navSvc,$localStorage,$timeout,audioSvc,timeSvc,$q,
             $scope.work = false;
             //do not rest in last round
             if ($scope.roundsLeft == 1) {
+                audioSvc.playBell3();
                 navSvc.back();
             } else {
+                audioSvc.playBell1();
                 countDownRest().then(function () {
+                    audioSvc.playBell1();
                     $scope.rest = false;
                     $scope.roundsLeft--;
                     $scope.round++;
@@ -135,7 +148,7 @@ function RunRoundsCtrl($scope,navSvc,$localStorage,$timeout,audioSvc,timeSvc,$q,
     };
     var prepareTimer = function () {
         if ($scope.prepareSeconds <= 0) {
-            audioSvc.playGong();
+            audioSvc.playBell3();
             countDown();
         } else {
             $scope.prepareSeconds--;
@@ -236,8 +249,8 @@ function DeviceCtrl($scope) {
 }
 
 function SettingsCtrl($scope,overlaySvc) {
-    $scope.changeOrientation = function() {
-        window.orientation = window.orientation + 90;
+    $scope.closeApplication = function() {
+      navigator.app.exitApp();
     }
 }
 

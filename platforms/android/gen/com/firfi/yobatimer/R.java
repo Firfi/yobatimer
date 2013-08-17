@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package com.firfi.yobaimer;
+package com.firfi.yobatimer;
 
 public final class R {
     public static final class attr {
