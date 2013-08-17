@@ -2,10 +2,7 @@
 
 /* Controllers */
 // phonegapReady should be included in main controller in order to initialization before phonegapready event fired
-function HomeCtrl(phonegapReady,$scope,navSvc,$rootScope,$localStorage,timerTypesSvc,storageSvc,overlaySvc,timeSvc,audioSvc) {
-    $scope.test = function() {
-        audioSvc.playTick();
-    };
+function HomeCtrl(phonegapReady,$scope,navSvc,$rootScope,$localStorage,timerTypesSvc,storageSvc,overlaySvc,timeSvc) {
     var slidePage = function (path,type) {
         navSvc.slidePage(path,type);
     };
@@ -97,6 +94,7 @@ function RunRoundsCtrl($scope,navSvc,$localStorage,$timeout,audioSvc,timeSvc,$q,
                 if (nextInterval && $scope.roundTimeSpent.unix() == nextInterval.unix()) {
                     nextInterval = intervals.shift();
                     $scope.relaxed = !$scope.relaxed;
+                    audioSvc.playTick();
                 }
                 if ($scope.roundTimeLeft.unix() == 0) {
                     resetRoundTimeLeft();
@@ -175,7 +173,7 @@ function RunRoundsCtrl($scope,navSvc,$localStorage,$timeout,audioSvc,timeSvc,$q,
 
 }
 
-function RunTimerCtrl($scope,navSvc,$localStorage,timerTypesSvc,timeSvc,$timeout,$rootScope) {
+function RunTimerCtrl($scope,navSvc,$localStorage,timerTypesSvc,timeSvc,$timeout,$rootScope,audioSvc) {
     var timeout;
     var tick;
     var flush;
@@ -190,6 +188,7 @@ function RunTimerCtrl($scope,navSvc,$localStorage,timerTypesSvc,timeSvc,$timeout
                 timeout = $timeout(function() {
                     if ($scope.time.valueOf() == 0) {
                         // we don't go back here
+                        audioSvc.playBell1();
                     } else {
                         $scope.time.subtract(100);
                         tick();

@@ -40,7 +40,7 @@ myApp.factory('audioSvc', function(agent,$timeout,phonegapReady) {
         localPlay = function(id) {
             var play;
             if (agent.isBrowser()) {
-              play = function() {console.info('playing sound: ' + id + ' at ' + moment().format('mm:ss.SSS'))};
+              play = function() { console.info('playing sound: ' + id + ' at ' + moment().format('mm:ss.SSS')) };
             } else {
               play = function() { PGLowLatencyAudio.play(id) }
             }

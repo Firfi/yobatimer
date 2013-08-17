@@ -31,7 +31,7 @@
         </li>
         <li class="topcoat-list__item" ng-show="timerTypesSvc.isCountdown() && !started">
             <a time-scroll class="topcoat-button" times="'timerMinutes', 'timerSeconds'" time-wheels="iiss">
-                {{timerType}}: {{$storage.timerMinutes}} min<span ng-show="$storage.timerSeconds !== '0'">/{{$storage.timerSeconds}} sec</span>
+                {{$storage.timerType}}: {{$storage.timerMinutes}} min<span ng-show="$storage.timerSeconds !== '0'">/{{$storage.timerSeconds}} sec</span>
             </a>
         </li>
     </ul>

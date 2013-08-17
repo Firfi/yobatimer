@@ -15,10 +15,11 @@
     <preference name="fullscreen" value="false" />
     <preference name="webviewbounce" value="true" />
     <plugins>
-        <plugin name="Media" value="org.apache.cordova.AudioHandler" />
         <plugin name="PGLowLatencyAudio" value="com.phonegap.PGLowLatencyAudio" />
     </plugins>
-    <feature name="http://api.phonegap.com/1.0/file"/>
-    <feature name="http://api.phonegap.com/1.0/media"/>
-    <feature name="http://api.phonegap.com/1.0/device"/>
+    <icon src="icons/android/drawable-ldpi/ic_launcher.png" gap:platform="android" gap:density="ldpi" />
+    <icon src="icons/android/drawable-mdpi/ic_launcher.png" gap:platform="android" gap:density="mdpi" />
+    <icon src="icons/android/drawable-hdpi/ic_launcher.png" gap:platform="android" gap:density="hdpi" />
+    <icon src="icons/android/drawable-xhdpi/ic_launcher.png" gap:platform="android" gap:density="xhdpi" />
+    <icon src="icons/android/drawable-xxhdpi/ic_launcher.png" gap:platform="android" gap:density="xxhdpi" />
 </widget>

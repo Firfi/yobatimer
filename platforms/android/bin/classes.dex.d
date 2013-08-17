@@ -1,6 +1,5 @@
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/bin/classes.dex : \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/bin/classes/com/firfi/yobatimer/BuildConfig.class \
-/Users/firfi/work/phonegapp/yobatimer/platforms/android/bin/classes/com/firfi/yobatimer/Manifest.class \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/bin/classes/com/firfi/yobatimer/R$attr.class \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/bin/classes/com/firfi/yobatimer/R$drawable.class \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/bin/classes/com/firfi/yobatimer/R$layout.class \
