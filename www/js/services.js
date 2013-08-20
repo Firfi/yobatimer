@@ -14,6 +14,9 @@ myApp.factory('agent', function() {
     return {
         isBrowser: function() {
             return window.tinyHippos != undefined;
+        },
+        isDevice: function() {
+            return !this.isBrowser();
         }
     }
 });
@@ -42,7 +45,7 @@ myApp.factory('audioSvc', function(agent,$timeout,phonegapReady) {
             if (agent.isBrowser()) {
               play = function() { console.info('playing sound: ' + id + ' at ' + moment().format('mm:ss.SSS')) };
             } else {
-              play = function() { PGLowLatencyAudio.play(id) }
+              play = function() { PGLowLatencyAudio.play(id); }
             }
             return {play: play};
         };
@@ -143,4 +146,42 @@ myApp.factory('overlaySvc', function($rootScope) {
         $rootScope.showTimerTypeDoalog = false;
     };
     $rootScope.closeOverlay();
+});
+
+myApp.factory('sleepSvc', function($rootScope, $timeout, agent) {
+    $rootScope.acquired = false;
+    var releaseTimeout;
+    return {
+        acquire: function(callback) {
+            var cb = callback || function() {};
+            if (agent.isDevice()) {
+                if (releaseTimeout) {
+                  $timeout.cancel(releaseTimeout);
+                  releaseTimeout = undefined;
+                }
+                if (!$rootScope.acquired) {
+                  window.plugins.powerManagement.acquire(function() {
+                    $rootScope.acquired = true;
+                    cb();
+                  }, cb);
+                } else cb();
+            } else cb();
+        },
+        release: function(callback) {
+            var cb = callback || function() {};
+            // check acquired two times - first if release() called before acquire() and second if some other release() timeout already ran
+            if (agent.isDevice() && $rootScope.acquired) {
+                // delayed release. we don't want to sleep right after release()
+                releaseTimeout = $timeout(function() {
+                    if ($rootScope.acquired) {
+                        window.plugins.powerManagement.release(function() {
+                            $rootScope.acquired = false;
+                            releaseTimeout = undefined;
+                        });
+                    }
+                }, 20000);
+            }
+            cb();
+        }
+    }
 });

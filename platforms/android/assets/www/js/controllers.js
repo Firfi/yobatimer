@@ -2,7 +2,7 @@
 
 /* Controllers */
 // phonegapReady should be included in main controller in order to initialization before phonegapready event fired
-function HomeCtrl(phonegapReady,$scope,navSvc,$rootScope,$localStorage,timerTypesSvc,storageSvc,overlaySvc,timeSvc) {
+function HomeCtrl(phonegapReady,$scope,navSvc,$rootScope,$localStorage,timerTypesSvc,storageSvc,overlaySvc,timeSvc,sleepSvc) {
     var slidePage = function (path,type) {
         navSvc.slidePage(path,type);
     };
@@ -40,140 +40,147 @@ function HomeCtrl(phonegapReady,$scope,navSvc,$rootScope,$localStorage,timerType
     };
 }
 
-function RunRoundsCtrl($scope,navSvc,$localStorage,$timeout,audioSvc,timeSvc,$q,timerTypesSvc) {
+function RunRoundsCtrl($scope,navSvc,$localStorage,$timeout,audioSvc,timeSvc,$q,timerTypesSvc,sleepSvc) {
     function resetRoundTimeLeft() {
-        $scope.roundTimeLeft = timeSvc.roundTime();
+      $scope.roundTimeLeft = timeSvc.roundTime();
     }
-    resetRoundTimeLeft();
-    $scope.roundTimeSpent = moment(0);
-    $scope.roundTime = timeSvc.roundTime();
     function resetRestTimeLeft() {
-        $scope.restTimeLeft = timeSvc.restTime();
+      $scope.restTimeLeft = timeSvc.restTime();
     }
-    $scope.complex = timerTypesSvc.isComplex();
-    resetRestTimeLeft();
-    $scope.roundsLeft = $localStorage.rounds;
-    $scope.round = 1;
-    $scope.prepareSeconds = 0;
-    $scope.work = false;
-    $scope.rest = false;
-    var ivals = function () {
-        if ($localStorage.timerType == timerTypesSvc.complex) { // interval
+    function init() {
+        resetRoundTimeLeft();
+        $scope.roundTimeSpent = moment(0);
+        $scope.roundTime = timeSvc.roundTime();
+        $scope.complex = timerTypesSvc.isComplex();
+        resetRestTimeLeft();
+        $scope.roundsLeft = $localStorage.rounds;
+        $scope.round = 1;
+        $scope.prepareSeconds = 0;
+        $scope.work = false;
+        $scope.rest = false;
+        var ivals = function () {
+          if ($localStorage.timerType == timerTypesSvc.complex) { // interval
             // compute intervals
             var start = moment(0);
             var end = timeSvc.roundTime();
             var r = [];
             while (start < end) {
-                start.add(timeSvc.relaxedTime().unix()*1000);
-                r.push(start.clone());
-                start.add(timeSvc.intensiveTime().unix()*1000);
-                r.push(start.clone());
+              start.add(timeSvc.relaxedTime().unix()*1000);
+              r.push(start.clone());
+              start.add(timeSvc.intensiveTime().unix()*1000);
+              r.push(start.clone());
             }
             return r
-        } else {
+          } else {
             return [];
-        }
-    }();
-    var timeout;
-    var countDown = function () {
-        $scope.started = true;
-        $scope.relaxed = true;
-        function countDownRound() {
+          }
+        }();
+        var timeout;
+        var countDown = function () {
+          $scope.started = true;
+          $scope.relaxed = true;
+          function countDownRound() {
             var intervals = ivals.slice(0); //shallow;
             var nextInterval = intervals.shift();
             var d = $q.defer();
             //check pause case
             if ($scope.rest) {
-                d.resolve();
-                return d.promise;
+              d.resolve();
+              return d.promise;
             }
             $scope.work = true;
             timeout = $timeout((function cdr () {
-                $scope.roundTimeLeft.subtract(1000);
-                $scope.roundTimeSpent.add(1000);
-                if (nextInterval && $scope.roundTimeSpent.unix() == nextInterval.unix()) {
-                    nextInterval = intervals.shift();
-                    $scope.relaxed = !$scope.relaxed;
-                    audioSvc.playTick();
+              $scope.roundTimeLeft.subtract(1000);
+              $scope.roundTimeSpent.add(1000);
+              if (nextInterval && $scope.roundTimeSpent.unix() == nextInterval.unix()) {
+                nextInterval = intervals.shift();
+                $scope.relaxed = !$scope.relaxed;
+                if ($scope.roundTimeLeft.unix() > 0) {
+                  audioSvc.playTick();
                 }
-                if ($scope.roundTimeLeft.unix() == 0) {
-                    resetRoundTimeLeft();
-                    $scope.roundTimeSpent = moment(0);
-                    d.resolve();
-                } else {
-                    if ($scope.roundTimeLeft.unix() < 4) {
-                      audioSvc.playTick();
-                    }
-                    timeout = $timeout(cdr, 1000);
+              }
+              if ($scope.roundTimeLeft.unix() == 0) {
+                resetRoundTimeLeft();
+                $scope.roundTimeSpent = moment(0);
+                d.resolve();
+              } else {
+                if ($scope.roundTimeLeft.unix() < 4) {
+                  audioSvc.playTick();
                 }
+                timeout = $timeout(cdr, 1000);
+              }
             }), 1000);
             return d.promise;
-        }
-        function countDownRest() {
+          }
+          function countDownRest() {
             var d = $q.defer();
             $scope.rest = true;
             timeout = $timeout((function cdr () {
-                $scope.restTimeLeft.subtract(1000);
-                if ($scope.restTimeLeft.unix() == 0) {
-                    resetRestTimeLeft();
-                    d.resolve();
-                } else {
-                    if ($scope.restTimeLeft.unix() < 3) {
-                      audioSvc.playTick();
-                    }
-                    timeout = $timeout(cdr, 1000);
+              $scope.restTimeLeft.subtract(1000);
+              if ($scope.restTimeLeft.unix() == 0) {
+                resetRestTimeLeft();
+                d.resolve();
+              } else {
+                if ($scope.restTimeLeft.unix() < 3) {
+                  audioSvc.playTick();
                 }
+                timeout = $timeout(cdr, 1000);
+              }
             }), 1000);
             return d.promise;
-        }
-        countDownRound().then(function () {
+          }
+          countDownRound().then(function () {
             $scope.work = false;
             //do not rest in last round
             if ($scope.roundsLeft == 1) {
-                audioSvc.playBell3();
-                navSvc.back();
+              audioSvc.playBell3();
+              navSvc.back();
             } else {
+              audioSvc.playBell1();
+              countDownRest().then(function () {
                 audioSvc.playBell1();
-                countDownRest().then(function () {
-                    audioSvc.playBell1();
-                    $scope.rest = false;
-                    $scope.roundsLeft--;
-                    $scope.round++;
-                    countDown();
-                });
+                $scope.rest = false;
+                $scope.roundsLeft--;
+                $scope.round++;
+                countDown();
+              });
             }
-        })
-    };
-    var prepareTimer = function () {
-        if ($scope.prepareSeconds <= 0) {
+          })
+        };
+        var prepareTimer = function () {
+          if ($scope.prepareSeconds <= 0) {
             audioSvc.playBell3();
             countDown();
-        } else {
+          } else {
             $scope.prepareSeconds--;
             audioSvc.playTick();
             timeout = $timeout(prepareTimer, 1500);
-        }
-    };
-    timeout = $timeout(prepareTimer, 2000);
-    $scope.back = function () {
-        navSvc.back();
-    };
-    $scope.pause = function () {
-        $scope.paused = true;
-        $timeout.cancel(timeout);
-    };
-    $scope.resume = function () {
-        $scope.paused = false;
-        $scope.started = true;
-        countDown();
-    };
-    $scope.$on('$destroy', function(){
-        $timeout.cancel(timeout);
-    });
+          }
+        };
+        timeout = $timeout(prepareTimer, 2000);
+        $scope.back = function () {
+          navSvc.back();
+        };
+        $scope.pause = function () {
+          $scope.paused = true;
+          $timeout.cancel(timeout);
+        };
+        $scope.resume = function () {
+          $scope.paused = false;
+          $scope.started = true;
+          countDown();
+        };
+        $scope.$on('$destroy', function(){
+          sleepSvc.release(function() {
+            $timeout.cancel(timeout);
+          });
+        });
+    }
+    sleepSvc.acquire(init);
 
 }
 
-function RunTimerCtrl($scope,navSvc,$localStorage,timerTypesSvc,timeSvc,$timeout,$rootScope,audioSvc) {
+function RunTimerCtrl($scope,navSvc,$localStorage,timerTypesSvc,timeSvc,$timeout,$rootScope,audioSvc,sleepSvc) {
     var timeout;
     var tick;
     var flush;
@@ -196,7 +203,8 @@ function RunTimerCtrl($scope,navSvc,$localStorage,timerTypesSvc,timeSvc,$timeout
                 },100);
             };
         } else { // is timer
-            flush = function() {
+            flush = function(isStop) {
+                if (isStop) $scope.snapshot();
                 $scope.time = moment(0);
             };
             flush();
@@ -211,15 +219,16 @@ function RunTimerCtrl($scope,navSvc,$localStorage,timerTypesSvc,timeSvc,$timeout
     $scope.start = function() {
         $rootScope.started = true;
         $scope.snapshots = [];
-        tick();
+        sleepSvc.acquire(tick);
     };
     $scope.stop = function() {
         $rootScope.paused = false;
         $rootScope.started = false;
         $timeout.cancel(timeout);
-        flush();
+        sleepSvc.release();
+        flush(true);
     };
-    $scope.$on('$destroy', function(){
+    $scope.$on('$destroy', function() {
         $timeout.cancel(timeout);
     });
     $scope.pause = function() {
@@ -236,7 +245,6 @@ function RunTimerCtrl($scope,navSvc,$localStorage,timerTypesSvc,timeSvc,$timeout
     };
     init();
     $rootScope.$watch('timerType', function(value) {
-        console.warn(value);
         if (value == timerTypesSvc.timer || value == timerTypesSvc.countdown) {
             init();
         }

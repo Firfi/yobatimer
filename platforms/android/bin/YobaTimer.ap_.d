@@ -129,6 +129,7 @@
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/lib/moment.min.js \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/lib/ngStorage.js \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/lib/PGLowLatencyAudio.js \
+/Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/lib/powermanagement.js \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/lib/zepto.min.js \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/partials/homeView.html \
 /Users/firfi/work/phonegapp/yobatimer/platforms/android/assets/www/partials/runRoundsView.html \

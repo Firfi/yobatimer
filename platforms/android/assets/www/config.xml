@@ -1,21 +1,23 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.firfi.yobatimer"
-        version="0.0.1"
+        version="0.5.2"
+        versionCode="2"
         xmlns="http://www.w3.org/ns/widgets"
         xmlns:cdv="http://cordova.apache.org/ns/1.0"
         xmlns:gap = "http://phonegap.com/ns/1.0">
     <name>YobaTimer</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        A simple boxing timer with standart and interval modes.
     </description>
-    <author email="dev@callback.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="igor.loskutoff@gmail.com" href="http://firfi.com">
+        Firfi
     </author>
     <access origin="*" />
     <preference name="fullscreen" value="false" />
     <preference name="webviewbounce" value="true" />
     <plugins>
         <plugin name="PGLowLatencyAudio" value="com.phonegap.PGLowLatencyAudio" />
+        <plugin name="PowerManagement" value="org.apache.cordova.plugin.PowerManagement"/>
     </plugins>
     <icon src="icons/android/drawable-ldpi/ic_launcher.png" gap:platform="android" gap:density="ldpi" />
     <icon src="icons/android/drawable-mdpi/ic_launcher.png" gap:platform="android" gap:density="mdpi" />

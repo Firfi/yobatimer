@@ -16,6 +16,7 @@
     </feature>
     <plugins>
         <plugin name="PGLowLatencyAudio" value="com.phonegap.PGLowLatencyAudio" />
+        <plugin name="PowerManagement" value="org.apache.cordova.plugin.PowerManagement" />
     </plugins>
     <access origin="*" />
     <preference name="useBrowserHistory" value="true" />

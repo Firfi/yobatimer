@@ -6,18 +6,18 @@
 <div class="topcoat-list__container list" ng-controller="RunRoundsCtrl">
     <ul class="topcoat-list">
         <li class="topcoat-list__item rounds">
-            <span>Round:</span>
+            <span>Round :</span>
             <span class="round right"><span class="current-round">{{round}}</span>/{{$storage.rounds}}</span>
         </li>
         <li class="topcoat-list__item" ng-class="{current: work, relaxed: work && complex && relaxed, active: work && complex && !relaxed}">
-            <span class="round-time-left">Round time left:
+            <span class="round-time-left">Round time <span ng-show="work">left </span>:
             </span>
             <span class="round-time-left-number right">
                 {{roundTimeLeft.unix()*1000 | date:'mm:ss'}}
             </span>
         </li>
         <li class="topcoat-list__item" ng-class="{current: rest}">
-            <span class="rest-time-left">Rest time left:
+            <span class="rest-time-left">Rest time <span ng-show="rest">left </span>:
             </span>
             <span class="rest-time-left-number right">
                 {{restTimeLeft.unix()*1000 | date:'mm:ss'}}
