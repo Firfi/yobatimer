@@ -172,7 +172,7 @@ function RunRoundsCtrl($scope,navSvc,$localStorage,$timeout,audioSvc,timeSvc,$q,
         };
         $scope.$on('$destroy', function(){
           sleepSvc.release(function() {
-            $timeout.cancel(timeout);
+            if (timeout) { $timeout.cancel(timeout) }
           });
         });
     }
@@ -187,15 +187,17 @@ function RunTimerCtrl($scope,navSvc,$localStorage,timerTypesSvc,timeSvc,$timeout
     var init = function() {
         $scope.snapshots = [];
         if (timerTypesSvc.isCountdown()) {
-            flush = function() {
+            flush = function(isStop) {
+                if (isStop) $scope.snapshot();
                 $scope.time = timeSvc.timerTime();
             };
+            $rootScope.$on('yoba.timeChanged', function(){flush()}); // it is important to keep no-argument here
             flush();
             tick = function() {
                 timeout = $timeout(function() {
                     if ($scope.time.valueOf() == 0) {
-                        // we don't go back here
                         audioSvc.playBell1();
+                        stopTimer();
                     } else {
                         $scope.time.subtract(100);
                         tick();
@@ -222,14 +224,17 @@ function RunTimerCtrl($scope,navSvc,$localStorage,timerTypesSvc,timeSvc,$timeout
         sleepSvc.acquire(tick);
     };
     $scope.stop = function() {
+        stopTimer(true);
+        $timeout.cancel(timeout);
+    };
+    function stopTimer(isStopButton) {
         $rootScope.paused = false;
         $rootScope.started = false;
-        $timeout.cancel(timeout);
         sleepSvc.release();
-        flush(true);
-    };
+        flush(isStopButton);
+    }
     $scope.$on('$destroy', function() {
-        $timeout.cancel(timeout);
+        if (timeout) { $timeout.cancel(timeout) }
     });
     $scope.pause = function() {
         $rootScope.paused = true;

@@ -11,4 +11,4 @@ var myApp = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.d
         $routeProvider.when('/runRounds', {templateUrl: 'partials/runRoundsView.html'});
         $routeProvider.when('/runTimer', {templateUrl: 'partials/runTimerView.html'});
         $routeProvider.otherwise({redirectTo: '/'});
-  }]);
+    }]).run(function(phonegapReady) {});

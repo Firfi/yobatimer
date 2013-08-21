@@ -27,14 +27,12 @@ myApp.factory('phonegapReady', function ($rootScope, $q) {
     document.addEventListener('deviceready', function() {
         $rootScope.$apply(loadingDeferred.resolve);
     });
-    return function phonegapReady() {
-        return loadingDeferred.promise;
-    };
+    return loadingDeferred.promise;
 });
 
-myApp.factory('audioSvc', function(agent,$timeout,phonegapReady) {
+myApp.factory('audioSvc', function(agent,$timeout,phonegapReady, $q) {
     var localPlay = null;
-    var promise = phonegapReady().then(function () {
+    var promise = phonegapReady.then(function () {
 //        function getPhoneGapPath(p) {
 //            var path = window.location.pathname;
 //            path = path.substr(path, path.length - 10);
@@ -50,11 +48,15 @@ myApp.factory('audioSvc', function(agent,$timeout,phonegapReady) {
             return {play: play};
         };
         try {
-          PGLowLatencyAudio.preloadFX('beep', 'beep.wav');
-          PGLowLatencyAudio.preloadFX('bell1', 'bell1.wav');
-          PGLowLatencyAudio.preloadFX('bell3', 'bell3.wav');
+          PGLowLatencyAudio.preloadFX('beep', 'beep.wav', function(){
+            PGLowLatencyAudio.preloadFX('bell1', 'bell1.wav', function(){
+              PGLowLatencyAudio.preloadFX('bell3', 'bell3.wav', function(){
+                // and this way it is supposed to NOT mingle sounds
+              }, function(e) {alert(e)});
+            }, function(e) {alert(e)});
+          }, function(e) {alert(e)});
         } catch(e) {
-          if (!agent.isBrowser()) {
+          if (agent.isDevice()) {
             alert(e);
           }
         }

@@ -7,7 +7,7 @@ angular.module('myApp.directives', [])
           elm.text(version);
         }
     }])
-    .directive('timeScroll', function($localStorage) {
+    .directive('timeScroll', function($localStorage, $rootScope) {
         return function(scope, elm, attrs) {
             var times = eval('['+attrs.times+']');
             var timesNow = []; angular.forEach(times, function(t) {timesNow.push($localStorage[t])});
@@ -22,7 +22,8 @@ angular.module('myApp.directives', [])
                 onSelect: function(time) {
                     angular.forEach(times, function(name, i) {
                         $localStorage[name] = time[i];
-                    })
+                    });
+                    $rootScope.$broadcast('yoba.timeChanged');
                 }
             };
             if (attrs.secText) conf['secText'] = attrs.secText;

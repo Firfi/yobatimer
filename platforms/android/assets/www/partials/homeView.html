@@ -10,9 +10,9 @@
 </div>
 
 <div class="topcoat-list__container list main">
-    <ul class="topcoat-list settings-list">
+    <ul class="topcoat-list settings-list" ng-show="!started">
         <li class="topcoat-list__item--first">
-            <a class="topcoat-button" ng-click="selectTimerTypeDialog()" ng-show="!started">Mode: {{$storage.timerType}}</a>
+            <a class="topcoat-button" ng-click="selectTimerTypeDialog()">Mode: {{$storage.timerType}}</a>
         </li>
         <li class="topcoat-list__item" ng-show="!timerTypesSvc.notRounds()">
             <a time-scroll class="topcoat-button" times="'rounds', 'roundMinutes', 'roundSeconds'" mins="'1'" time-wheels="HHiiss">

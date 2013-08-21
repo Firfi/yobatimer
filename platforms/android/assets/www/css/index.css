@@ -364,19 +364,26 @@ h4 {
     width: 80%;
 }
 
-.current {
-    font-size: 30px;
+.current .timeleft {
+    display: inline-block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 22px;
+}
+
+.current .timeleft-number {
+    font-size: 40px;
 }
 
 .right {
     float:right;
 }
 
-.relaxed {
+.relaxed .timeleft {
     color: mediumspringgreen;
 }
 
-.active {
+.active .timeleft {
     color: orangered;
 }
 

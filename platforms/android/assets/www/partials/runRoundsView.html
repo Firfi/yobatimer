@@ -10,16 +10,16 @@
             <span class="round right"><span class="current-round">{{round}}</span>/{{$storage.rounds}}</span>
         </li>
         <li class="topcoat-list__item" ng-class="{current: work, relaxed: work && complex && relaxed, active: work && complex && !relaxed}">
-            <span class="round-time-left">Round time <span ng-show="work">left </span>:
+            <span class="round-time-left timeleft">Round time <span ng-show="work">left </span>:
             </span>
-            <span class="round-time-left-number right">
+            <span class="round-time-left-number right timeleft-number">
                 {{roundTimeLeft.unix()*1000 | date:'mm:ss'}}
             </span>
         </li>
         <li class="topcoat-list__item" ng-class="{current: rest}">
-            <span class="rest-time-left">Rest time <span ng-show="rest">left </span>:
+            <span class="rest-time-left timeleft">Rest time <span ng-show="rest">left </span>:
             </span>
-            <span class="rest-time-left-number right">
+            <span class="rest-time-left-number right timeleft-number">
                 {{restTimeLeft.unix()*1000 | date:'mm:ss'}}
             </span>
         </li>
